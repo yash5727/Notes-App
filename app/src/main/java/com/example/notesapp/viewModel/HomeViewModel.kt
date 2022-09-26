@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 open class HomeViewModel(application: Application) : BaseViewModel(application) {
     private val notesDao: NotesDao = NotesAppDatabase.getInstance(application, ioScope).notesDao()
-    protected val repository: NotesRepository = NotesRepository(notesDao)
+    private val repository: NotesRepository = NotesRepository(notesDao)
 
     fun add(notes: Notes){
         mainScope.launch {
