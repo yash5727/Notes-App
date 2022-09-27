@@ -13,7 +13,7 @@ open class HomeViewModel(application: Application) : BaseViewModel(application) 
     private val notesDao: NotesDao = NotesAppDatabase.getInstance(application, ioScope).notesDao()
     private val repository: NotesRepository = NotesRepository(notesDao)
 
-    fun add(notes: Notes){
+    fun addNote(notes: Notes) {
         mainScope.launch {
             val job = ioScope.launch {
                 repository.insert(notes)
