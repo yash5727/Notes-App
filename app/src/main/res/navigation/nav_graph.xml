@@ -7,8 +7,18 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.notesapp.ui.HomeFragment"
+        android:name="com.example.notesapp.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
+
+        <!--   <argument
+               android:name="note"
+               android:defaultValue="@null"
+               app:argType="int"
+               app:nullable="true" />
+           <action
+               android:id="@+id/action_searchProfileFragment_to_listProfileFragment"
+               app:destination="@id/listProfileFragment" />
+   -->
     </fragment>
 
 
