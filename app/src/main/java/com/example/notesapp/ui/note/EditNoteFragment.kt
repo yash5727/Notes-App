@@ -1,30 +1,38 @@
 package com.example.notesapp.ui.note
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.BaseFragment
 import com.example.notesapp.R
+import com.example.notesapp.databinding.FragmentEditNoteBinding
 import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.repository.Notes
 import com.example.notesapp.viewModel.HomeViewModel
 
 class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
 
     private val viewModel: HomeViewModel by viewModels()
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var binding: FragmentEditNoteBinding
+    private val args: EditNoteFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         if (!::binding.isInitialized) {
-            binding = FragmentHomeBinding.inflate(inflater, container, false)
+            binding = FragmentEditNoteBinding.inflate(inflater, container, false)
 
             setupViews()
         }
@@ -40,29 +48,41 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
             appBarConfiguration
         )
 
-        //binding.toolbarSearch.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
-        //binding.toolbarSearch.svUsername.visibility = View.GONE
-        binding.toolbarSearch.toolbar.title = "Notes"
+        binding.toolbarSearch.toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
+        binding.toolbarSearch.svNote.visibility = View.GONE
+        binding.toolbarSearch.toolbar.title = "Note"
 
-        adapter = HomeAdapter(ArrayList()) { id ->
-            navigateToEditNote(id)
+        binding.note = args.note
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val note = binding.note
+        if (note?.id != null && note.id > 0) {
+            note.title = binding.etTitle.text.toString().trim()
+            note.description = binding.etDescription.text.toString().trim()
+            viewModel.updateNote(note)
+        } else {
+            viewModel.addNote(
+                Notes(
+                    title = binding.etTitle.text.toString().trim(),
+                    description = binding.etDescription.text.toString().trim(),
+                    isLocked = false
+                )
+            )
         }
-        binding.rvList.adapter = adapter
-        binding.rvList.layoutManager = LinearLayoutManager(requireContext())
 
-       // viewModel.addNote(Notes(title = "2", description = "b", isLocked = false))
-        adapter.notifyDataSetChanged()
     }
 
     override fun setupObservers() {
         /*viewModel.isLoading.observe(viewLifecycleOwner) {
             isLoading(it)
         }*/
-
-        viewModel.notes.observe(viewLifecycleOwner) {
-            adapter.mList = it
-            adapter.notifyDataSetChanged()
-        }
+/*
+        viewModel._singleNote.observe(viewLifecycleOwner) {
+            binding.note = it
+        }*/
 
         /*  viewModel.error().observe(viewLifecycleOwner, EventObserver { error ->
               if (errorDialog != null && errorDialog?.isShowing == true) {
@@ -70,11 +90,5 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
               }
               binding.message = showErrorDialog(error)
           })*/
-    }
-
-    private fun navigateToEditNote(noteId: Int) {
-        /*  val action =
-              ListProfileFragmentDirections.actionListProfileFragmentToSearchProfileFragment(userName)
-          navigate(action)*/
     }
 }

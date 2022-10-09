@@ -1,17 +1,14 @@
 package com.example.notesapp.viewModel
 
 import android.app.Application
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import com.example.notesapp.BaseViewModel
-import com.example.notesapp.Utils.Event
 import com.example.notesapp.repository.Notes
 import com.example.notesapp.repository.NotesAppDatabase
 import com.example.notesapp.repository.NotesDao
 import com.example.notesapp.repository.NotesRepository
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 open class HomeViewModel(application: Application) : BaseViewModel(application) {
@@ -22,21 +19,37 @@ open class HomeViewModel(application: Application) : BaseViewModel(application) 
     private var _notes: LiveData<List<Notes>> = repository.allNotes
     val notes: LiveData<List<Notes>> get() = _notes
 
-    fun addNote(notes: Notes) {
+    var _singleNote: Notes? = null
+    var singleNote: LiveData<Notes> = MutableLiveData()
+
+    fun addNote(note: Notes) {
         mainScope.launch {
             val job = ioScope.launch {
-                repository.insert(notes)
+                repository.insert(note)
             }
             job.join()
         }
     }
-/*
-    fun getNotes() {
-        viewModelScope.launch {
+
+    fun updateNote(note: Notes) {
+        mainScope.launch {
             val job = ioScope.launch {
-                notes = repository.getAllNotes()
+                repository.update(note)
             }
             job.join()
         }
-    }*/
+    }
+
+    fun getNote(id: Int) {
+        mainScope.launch {
+            val job = ioScope.launch {
+                singleNote = repository.getNote(id).asLiveData()
+                /*repository.getNote(id).collect() {
+                    singleNote.value = it
+                }*/
+            }
+            job.join()
+        }
+    }
+
 }

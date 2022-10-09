@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.BaseFragment
 import com.example.notesapp.R
 import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.repository.Notes
 import com.example.notesapp.viewModel.HomeViewModel
 
 class HomeFragment : BaseFragment(R.layout.fragment_home) {
@@ -45,20 +46,22 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         //binding.toolbarSearch.svUsername.visibility = View.GONE
         binding.toolbarSearch.toolbar.title = "Notes"
 
-        adapter = HomeAdapter(ArrayList()) { id ->
-            navigateToEditNote(id)
+        adapter = HomeAdapter(ArrayList()) { note ->
+            navigateToEditNote(note)
         }
         binding.rvList.adapter = adapter
         binding.rvList.layoutManager = LinearLayoutManager(requireContext())
 
-       // viewModel.addNote(Notes(title = "2", description = "b", isLocked = false))
-        adapter.notifyDataSetChanged()
+
     }
 
     override fun setupObservers() {
         /*viewModel.isLoading.observe(viewLifecycleOwner) {
             isLoading(it)
         }*/
+        binding.fabAdd.setOnClickListener {
+            navigateToEditNote()
+        }
 
         viewModel.notes.observe(viewLifecycleOwner) {
             adapter.mList = it
@@ -73,9 +76,9 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
           })*/
     }
 
-    private fun navigateToEditNote(noteId: Int) {
-        /*  val action =
-              ListProfileFragmentDirections.actionListProfileFragmentToSearchProfileFragment(userName)
-          navigate(action)*/
+    private fun navigateToEditNote(note: Notes? = null) {
+        val action =
+            HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note)
+        navigate(action)
     }
 }

@@ -10,16 +10,19 @@
         android:name="com.example.notesapp.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home">
 
-        <!--   <argument
-               android:name="note"
-               android:defaultValue="@null"
-               app:argType="int"
-               app:nullable="true" />
-           <action
-               android:id="@+id/action_searchProfileFragment_to_listProfileFragment"
-               app:destination="@id/listProfileFragment" />
-   -->
+        <action
+            android:id="@+id/action_homeFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
 
-
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.example.notesapp.ui.note.EditNoteFragment"
+        tools:layout="@layout/fragment_edit_note">
+        <argument
+            android:name="note"
+            android:defaultValue="@null"
+            app:argType="com.example.notesapp.repository.Notes"
+            app:nullable="true" />
+    </fragment>
 </navigation>

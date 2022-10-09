@@ -11,7 +11,7 @@ import com.example.notesapp.repository.Notes
 
 class HomeAdapter(
     var mList: List<Notes>,
-    private val listener: (Int) -> Unit = {}
+    private val listener: (Notes) -> Unit = {}
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     // create new views
@@ -45,7 +45,7 @@ class HomeAdapter(
                 note = data
 
                 rlNoteCard.setOnClickListener {
-                    data.id?.let { it1 -> listener.invoke(it1) }
+                    data.let { it1 -> listener.invoke(it1) }
                 }
                 executePendingBindings()
             }

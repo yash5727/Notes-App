@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 android {
     compileSdk 33
@@ -65,6 +66,8 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:4.13.2"
 
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
 
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
