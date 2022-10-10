@@ -47,6 +47,7 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:ellipsize="end"
+                    android:visibility="@{TextUtils.isEmpty(note.title) ? View.GONE : View.VISIBLE}"
                     android:textStyle="bold"
                     app:maxLines="@{1}"
                     tools:text="jdslnhf" />
@@ -57,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{note.description}"
                     android:textSize="20sp"
+                    android:visibility="@{TextUtils.isEmpty(note.description) ? View.GONE : View.VISIBLE}"
                     android:ellipsize="end"
                     app:maxLines="@{3}"
                     tools:text="jdslnhf fasdfsg" />

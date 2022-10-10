@@ -112,7 +112,7 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
             viewModel.updateNote(note)
         } else {
             if (binding.etTitle.text.toString().trim().isNotEmpty()
-                && binding.etDescription.text.toString().trim().isNotEmpty()
+                || binding.etDescription.text.toString().trim().isNotEmpty()
             ) {
                 viewModel.addNote(
                     Notes(
