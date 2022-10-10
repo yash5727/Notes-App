@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/lockedNotesFragment"
-        android:name="com.example.notesapp.ui.LockedNotesFragment"
+        android:name="com.example.notesapp.ui.lockedNotes.LockedNotesFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_lockedNotesFragment_to_editNoteFragment"
