@@ -8,4 +8,10 @@
         app:showAsAction="ifRoom"
         android:title="Delete">
     </item>
+    <item
+        android:id="@+id/action_lock"
+        android:icon="@drawable/ic_lock"
+        app:showAsAction="ifRoom"
+        android:title="Lock">
+    </item>
 </menu>

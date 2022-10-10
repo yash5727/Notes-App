@@ -12,8 +12,8 @@ interface NotesDao {
     @Update
     fun updateNotes(vararg notes: Notes)
 
-    @Delete
-    fun deleteNotes(vararg notes: Notes)
+    @Query("DELETE FROM notes WHERE id = :id")
+    fun deleteNote(id: Int)
 
     @Query("DELETE FROM notes")
     fun deleteAll()
@@ -23,5 +23,8 @@ interface NotesDao {
 
     @Query("SELECT * FROM notes")
     fun getAllNotes(): Flow<List<Notes>>
+
+    @Query("SELECT * FROM notes WHERE isLocked = true")
+    fun getLockedNotes(): Flow<List<Notes>>
 
 }

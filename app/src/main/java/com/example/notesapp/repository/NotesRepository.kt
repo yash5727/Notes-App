@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class NotesRepository(private val notesDao: NotesDao) {
 
     val allNotes: LiveData<List<Notes>> = notesDao.getAllNotes().asLiveData()
+    val allLockedNotes: LiveData<List<Notes>> = notesDao.getLockedNotes().asLiveData()
 
     @WorkerThread
     fun insert(notes: Notes) {
@@ -20,18 +21,12 @@ class NotesRepository(private val notesDao: NotesDao) {
     }
 
     @WorkerThread
-    fun delete(notes: Notes) {
-        notesDao.deleteNotes()
+    fun deleteNote(id: Int) {
+        notesDao.deleteNote(id)
     }
 
     @WorkerThread
     fun getNote(id: Int): Flow<Notes> {
         return notesDao.getNote(id)
     }
-
-    @WorkerThread
-    fun getAllNotes(): Flow<List<Notes>> {
-        return notesDao.getAllNotes()
-    }
-
 }
