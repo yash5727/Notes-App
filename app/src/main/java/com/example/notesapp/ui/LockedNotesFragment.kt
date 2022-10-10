@@ -11,7 +11,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.BaseFragment
 import com.example.notesapp.R
-import com.example.notesapp.Utils.isBiometricsSupported
 import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.repository.Notes
 import com.example.notesapp.ui.home.HomeAdapter
@@ -55,9 +54,6 @@ class LockedNotesFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     override fun setupObservers() {
-        /*viewModel.isLoading.observe(viewLifecycleOwner) {
-            isLoading(it)
-        }*/
         binding.fabAdd.setOnClickListener {
             navigateToEditNote()
         }
@@ -71,13 +67,6 @@ class LockedNotesFragment : BaseFragment(R.layout.fragment_home) {
                 binding.message = ""
             }
         }
-
-        /*  viewModel.error().observe(viewLifecycleOwner, EventObserver { error ->
-              if (errorDialog != null && errorDialog?.isShowing == true) {
-                  return@EventObserver
-              }
-              binding.message = showErrorDialog(error)
-          })*/
     }
 
     private fun navigateToEditNote(note: Notes? = null) {

@@ -20,7 +20,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.BaseFragment
 import com.example.notesapp.R
-import com.example.notesapp.Utils.Utils
 import com.example.notesapp.Utils.isBiometricsSupported
 import com.example.notesapp.Utils.showPermissionAlertDialog
 import com.example.notesapp.databinding.FragmentHomeBinding
@@ -128,8 +127,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                         getString(R.string.authentication_succeeded), Toast.LENGTH_SHORT
                     ).show()
                     navigateToLockedNotes()
-                    // settingsViewModel.updateFaceIdSwitch(true)
-                    // permissionViewModel.biometricAuthenticationDone()
                 }
 
                 override fun onAuthenticationFailed() {
@@ -138,7 +135,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                         requireContext(),
                         getString(R.string.authentication_failed), Toast.LENGTH_SHORT
                     ).show()
-//                    settingsViewModel.updateFaceIdSwitch(false)
                 }
             })
 
@@ -162,8 +158,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 closeButton.text = "No"
 
                 closeIconClickListener {
-                    //settingsViewModel.updateFaceIdSwitch(false)
-                    //   permissionViewModel.dialogClose()
                 }
 
                 doneIconClickListener {
@@ -203,9 +197,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
 
     override fun setupObservers() {
-        /*viewModel.isLoading.observe(viewLifecycleOwner) {
-            isLoading(it)
-        }*/
         binding.fabAdd.setOnClickListener {
             navigateToEditNote()
         }
@@ -219,13 +210,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 binding.message = ""
             }
         }
-
-        /*  viewModel.error().observe(viewLifecycleOwner, EventObserver { error ->
-              if (errorDialog != null && errorDialog?.isShowing == true) {
-                  return@EventObserver
-              }
-              binding.message = showErrorDialog(error)
-          })*/
     }
 
     private fun navigateToEditNote(note: Notes? = null) {

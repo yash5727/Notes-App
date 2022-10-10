@@ -22,8 +22,6 @@ open class HomeViewModel(application: Application) : BaseViewModel(application) 
     private var _lockedNotes: LiveData<List<Notes>> = repository.allLockedNotes
     val lockedNotes: LiveData<List<Notes>> get() = _lockedNotes
 
-    var singleNote: LiveData<Notes> = MutableLiveData()
-
     fun addNote(note: Notes) {
         mainScope.launch {
             val job = ioScope.launch {
@@ -49,17 +47,4 @@ open class HomeViewModel(application: Application) : BaseViewModel(application) 
             job.join()
         }
     }
-
-    fun getNote(id: Int) {
-        mainScope.launch {
-            val job = ioScope.launch {
-                singleNote = repository.getNote(id).asLiveData()
-                /*repository.getNote(id).collect() {
-                    singleNote.value = it
-                }*/
-            }
-            job.join()
-        }
-    }
-
 }

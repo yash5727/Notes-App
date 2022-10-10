@@ -1,7 +1,6 @@
 package com.example.notesapp.ui.note
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -15,7 +14,6 @@ import com.example.notesapp.Utils.Utils
 import com.example.notesapp.databinding.FragmentEditNoteBinding
 import com.example.notesapp.repository.Notes
 import com.example.notesapp.viewModel.HomeViewModel
-import java.util.logging.LogManager
 
 
 class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
@@ -24,6 +22,9 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
     private lateinit var binding: FragmentEditNoteBinding
     private val args: EditNoteFragmentArgs by navArgs()
     private var isLocked = false
+    override fun setupObservers() {
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +32,8 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
     ): View {
         if (!::binding.isInitialized) {
             binding = FragmentEditNoteBinding.inflate(inflater, container, false)
-
             setupViews()
         }
-
-        setupObservers()
         return binding.root
     }
 
@@ -126,23 +124,5 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
             }
 
         }
-
-    }
-
-    override fun setupObservers() {
-        /*viewModel.isLoading.observe(viewLifecycleOwner) {
-            isLoading(it)
-        }*/
-/*
-        viewModel._singleNote.observe(viewLifecycleOwner) {
-            binding.note = it
-        }*/
-
-        /*  viewModel.error().observe(viewLifecycleOwner, EventObserver { error ->
-              if (errorDialog != null && errorDialog?.isShowing == true) {
-                  return@EventObserver
-              }
-              binding.message = showErrorDialog(error)
-          })*/
     }
 }
