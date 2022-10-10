@@ -51,16 +51,14 @@ class EditNoteFragment : BaseFragment(R.layout.fragment_edit_note) {
         binding.toolbar.inflateMenu(R.menu.edit_menu)
 
         binding.note = args.note
+        isLocked = args.isLocked
 
         if (args.note == null) {
             val menuItemDelete = binding.toolbar.menu.findItem(R.id.action_delete)
             menuItemDelete.isVisible = false
-            requireActivity().invalidateMenu()
-        } else {
-            val menuItemLock = binding.toolbar.menu.findItem(R.id.action_lock)
-            isLocked = args.note!!.isLocked
-            setLockStatus(menuItemLock)
         }
+        val menuItemLock = binding.toolbar.menu.findItem(R.id.action_lock)
+        setLockStatus(menuItemLock)
 
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             val id = menuItem.itemId

@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_homeFragment_to_editNoteFragment"
             app:destination="@id/editNoteFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_lockedNotesFragment"
+            app:destination="@id/lockedNotesFragment" />
     </fragment>
 
     <fragment
@@ -24,5 +28,19 @@
             android:defaultValue="@null"
             app:argType="com.example.notesapp.repository.Notes"
             app:nullable="true" />
+
+        <argument
+            android:name="isLocked"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lockedNotesFragment"
+        android:name="com.example.notesapp.ui.LockedNotesFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_lockedNotesFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
 </navigation>

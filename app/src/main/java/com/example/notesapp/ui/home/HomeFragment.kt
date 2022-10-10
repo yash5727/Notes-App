@@ -87,15 +87,21 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)) {
             BiometricManager.BIOMETRIC_SUCCESS -> authenticate()
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE ->
-                Toast.makeText(requireContext(),
-                    "No biometric features available on this device", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "No biometric features available on this device", Toast.LENGTH_SHORT
+                ).show()
             BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE ->
-                Toast.makeText(requireContext(),
-                    "Biometric features are currently unavailable", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Biometric features are currently unavailable", Toast.LENGTH_SHORT
+                ).show()
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> showDialog()
             else -> {
-                Toast.makeText(requireContext(),
-                    "Biometrics not accessible", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Biometrics not accessible", Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -104,34 +110,41 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         executor = ContextCompat.getMainExecutor(requireContext())
         biometricPrompt = BiometricPrompt(requireActivity(), executor,
             object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int,
-                                                   errString: CharSequence) {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
                     super.onAuthenticationError(errorCode, errString)
                     Toast.makeText(requireContext(), "$errString", Toast.LENGTH_SHORT).show()
-                   // settingsViewModel.updateFaceIdSwitch(false)
+                    // settingsViewModel.updateFaceIdSwitch(false)
                 }
 
                 override fun onAuthenticationSucceeded(
-                    result: BiometricPrompt.AuthenticationResult) {
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
                     super.onAuthenticationSucceeded(result)
-                    Toast.makeText(requireContext(),
-                        getString(R.string.authentication_succeeded), Toast.LENGTH_SHORT).show()
-
-                   // settingsViewModel.updateFaceIdSwitch(true)
-                   // permissionViewModel.biometricAuthenticationDone()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.authentication_succeeded), Toast.LENGTH_SHORT
+                    ).show()
+                    navigateToLockedNotes()
+                    // settingsViewModel.updateFaceIdSwitch(true)
+                    // permissionViewModel.biometricAuthenticationDone()
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(requireContext(),
-                        getString(R.string.authentication_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.authentication_failed), Toast.LENGTH_SHORT
+                    ).show()
 //                    settingsViewModel.updateFaceIdSwitch(false)
                 }
             })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("PromptInfo")
-            .setSubtitle("Password?")
+            .setTitle("Please Authenticate")
+            .setSubtitle("Unlock with fingerprint")
             .setNegativeButtonText("Use Password")
             .build()
 
@@ -150,7 +163,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
                 closeIconClickListener {
                     //settingsViewModel.updateFaceIdSwitch(false)
-                 //   permissionViewModel.dialogClose()
+                    //   permissionViewModel.dialogClose()
                 }
 
                 doneIconClickListener {
@@ -159,21 +172,28 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                             val enrollIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
                                 putExtra(
                                     Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
-                                    android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                                    android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
+                                )
                             }
                             startActivityForResult(enrollIntent, FACE_ID_REQUEST_CODE)
                         } else {
-                            Toast.makeText(requireContext(),
-                                getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } catch (e : ActivityNotFoundException) {
+                    } catch (e: ActivityNotFoundException) {
                         Log.e(javaClass.simpleName, "exception: $e")
-                        Toast.makeText(requireContext(),
-                            getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT
+                        ).show()
                     } catch (e: Exception) {
                         Log.e(javaClass.simpleName, "exception: $e")
-                        Toast.makeText(requireContext(),
-                            getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.biometric_not_accessible), Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
@@ -193,6 +213,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         viewModel.unLockedNotes.observe(viewLifecycleOwner) {
             adapter.mList = it
             adapter.notifyDataSetChanged()
+            if (it.isEmpty()) {
+                binding.message = "No Notes Found!"
+            } else {
+                binding.message = ""
+            }
         }
 
         /*  viewModel.error().observe(viewLifecycleOwner, EventObserver { error ->
@@ -205,7 +230,13 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private fun navigateToEditNote(note: Notes? = null) {
         val action =
-            HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note)
+            HomeFragmentDirections.actionHomeFragmentToEditNoteFragment(note, false)
+        navigate(action)
+    }
+
+    private fun navigateToLockedNotes() {
+        val action =
+            HomeFragmentDirections.actionHomeFragmentToLockedNotesFragment()
         navigate(action)
     }
 
