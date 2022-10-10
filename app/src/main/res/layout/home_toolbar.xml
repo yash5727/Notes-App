@@ -9,7 +9,7 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,13 +19,6 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/sv_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:iconifiedByDefault="false"
-            android:queryHint="Search Notes" />
 
     </androidx.appcompat.widget.Toolbar>
 
