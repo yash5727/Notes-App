@@ -12,5 +12,5 @@ data class Notes(
     val id: Int? = null,
     var title: String,
     var description: String,
-    var isLocked: Boolean
+    var isLocked: Boolean = false
 ) : Parcelable

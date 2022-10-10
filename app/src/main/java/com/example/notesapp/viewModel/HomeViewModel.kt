@@ -16,8 +16,9 @@ open class HomeViewModel(application: Application) : BaseViewModel(application) 
     private val notesDao: NotesDao = NotesAppDatabase.getInstance(application, ioScope).notesDao()
     private val repository: NotesRepository = NotesRepository(notesDao)
 
-    private var _notes: LiveData<List<Notes>> = repository.allNotes
-    val notes: LiveData<List<Notes>> get() = _notes
+    private var _unLockedNotes: LiveData<List<Notes>> = repository.allUnLockedNotes
+    val unLockedNotes: LiveData<List<Notes>> get() = _unLockedNotes
+
     private var _lockedNotes: LiveData<List<Notes>> = repository.allLockedNotes
     val lockedNotes: LiveData<List<Notes>> get() = _lockedNotes
 

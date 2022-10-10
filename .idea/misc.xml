@@ -5,16 +5,21 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_back_arrow.xml" value="0.149" />
         <entry key="app/src/main/res/drawable-v24/ic_search_white.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable-v24/popup_background.xml" value="0.123" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.108" />
         <entry key="app/src/main/res/drawable/ic_cancel_white.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.1695" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/fragment_edit_note.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/home_toolbar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/nav_graph.xml" value="0.26145833333333335" />
+        <entry key="app/src/main/res/layout/permission_alert_dialog.xml" value="0.23796296296296296" />
         <entry key="app/src/main/res/layout/search_toolbar.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/view_toolbar.xml" value="0.26145833333333335" />
         <entry key="app/src/main/res/menu/edit_menu.xml" value="0.2625" />
+        <entry key="app/src/main/res/menu/home_menu.xml" value="0.23796296296296296" />
       </map>
     </option>
   </component>

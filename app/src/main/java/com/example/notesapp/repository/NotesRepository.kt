@@ -9,6 +9,7 @@ class NotesRepository(private val notesDao: NotesDao) {
 
     val allNotes: LiveData<List<Notes>> = notesDao.getAllNotes().asLiveData()
     val allLockedNotes: LiveData<List<Notes>> = notesDao.getLockedNotes().asLiveData()
+    val allUnLockedNotes: LiveData<List<Notes>> = notesDao.getUnLockedNotes().asLiveData()
 
     @WorkerThread
     fun insert(notes: Notes) {

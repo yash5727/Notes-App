@@ -24,7 +24,9 @@ interface NotesDao {
     @Query("SELECT * FROM notes")
     fun getAllNotes(): Flow<List<Notes>>
 
-    @Query("SELECT * FROM notes WHERE isLocked = true")
+    @Query("SELECT * FROM notes WHERE isLocked = 1")
     fun getLockedNotes(): Flow<List<Notes>>
 
+    @Query("SELECT * FROM notes WHERE isLocked = 0")
+    fun getUnLockedNotes(): Flow<List<Notes>>
 }
